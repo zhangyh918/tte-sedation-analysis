@@ -1,0 +1,1 @@
+WITH e AS (SELECT * FROM json_to_recordset($1::json) AS q(stay_id integer,subject_id integer,hadm_id integer,time_zero timestamp)) SELECT DISTINCT ON(e.stay_id) e.stay_id,r.rass_score FROM e JOIN analysis._tmp_rass_raw r ON r.stay_id=e.stay_id AND r.rass_time<=e.time_zero ORDER BY e.stay_id,r.rass_time DESC,r.rass_score;
